@@ -30,16 +30,16 @@ class LoginController extends Controller
         if (! $user || ! Auth::attempt($request->only('email', 'password'))) {
             return response()->json(['message' => 'Invalid credentials.'], 401);
         }
-        if (! $user->hasVerifiedEmail()) {
-            return response()->json([
-                'message' => 'يرجى تأكيد عنوان بريدكم الإلكتروني قبل تسجيل الدخول إلى حسابكم'
-            ], 403);
-        }
+        // if (! $user->hasVerifiedEmail()) {
+        //     return response()->json([
+        //         'message' => 'يرجى تأكيد عنوان بريدكم الإلكتروني قبل تسجيل الدخول إلى حسابكم'
+        //     ], 403);
+        // }
 
 
-        if ($user->status === 'disabled') {
-            return response()->json(['message' => 'سيتم تفعيل حسابكم وإتاحة تسجيل الدخول إليه بعد تعيين الدورات (الكورسات) الخاصة بكم من قبل إدارة النظام.'], 403);
-        }
+        // if ($user->status === 'disabled') {
+        //     return response()->json(['message' => 'سيتم تفعيل حسابكم وإتاحة تسجيل الدخول إليه بعد تعيين الدورات (الكورسات) الخاصة بكم من قبل إدارة النظام.'], 403);
+        // }
 
         $activeSessions = $user->deviceSessions()->orderBy('last_used_at')->get();
         if ($activeSessions->count() >= self::MAX_ACTIVE_DEVICES) {
