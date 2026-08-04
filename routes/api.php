@@ -57,17 +57,16 @@ Route::get(
     '/email/verify/{id}/{hash}',
     [EmailVerificationController::class, 'verify']
 )
-    ->middleware(['signed'])
-    ->name('verification.verify');
+->middleware('signed')
+->name('verification.verify');
 
 
-Route::middleware('auth:sanctum')->post(
-    '/email/verification-notification',
-    [EmailVerificationController::class, 'resend']
-)
+Route::middleware('auth:sanctum')
+    ->post(
+        '/email/verification-notification',
+        [EmailVerificationController::class, 'resend']
+    )
     ->middleware('throttle:6,1');
-
-
 /*
 |--------------------------------------------------------------------------
 |Student
